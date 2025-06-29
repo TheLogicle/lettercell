@@ -78,6 +78,13 @@ namespace error{
 			return "Error: Missing filename\n" + usage_string_run;
 		}
 	};
+	struct unknown_command: error{
+		std::string command;
+		unknown_command(std::string command){this->command = command;}
+		std::string what() override{
+			return "Error: Unknown command: '" + command + "'\n\n" + usage_string;
+		}
+	};
 
 	struct file_error: error{
 		std::string filename;

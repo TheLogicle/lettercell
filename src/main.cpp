@@ -46,6 +46,9 @@ int main(int argc, char** argv){
 		std::cout << error::help_string << std::endl;
 		return 0;
 	}
+	else{
+		std::cerr << error::unknown_command(argv[1]).what() << std::endl;
+	}
 
 
 	try{

@@ -29,6 +29,25 @@ Here is a visualization:
 - It can drop cells into the line of slots, and it can also pick up cells from there.
 - It can only change the value of the cell it is currently holding.
 
+## Usage
+LetterCell code should be written in files with a `.lc` extension.
+
+To run a `.lc` file:
+```bash
+lettercell run <file>
+```
+
+To only preprocess a `.lc` file (remove unnecessary characters and comments) and write the result to standard output:
+```bash
+lettercell pp <file>
+```
+
+To get the help page:
+```bash
+lettercell help
+```
+
+
 ## Operations
 
 | Operation | Description |

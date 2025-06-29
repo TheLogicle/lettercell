@@ -1,48 +1,70 @@
 #include <iostream>
-#include <unordered_map>
-#include <cstdint>
 #include <fstream>
 
 #include "lettercell.hpp"
+#include "error.hpp"
 
 int main(int argc, char** argv){
 
-	if(argc < 2) throw 255; //need to input filename as argument
-
-	int fileArg = 1;
-	bool preprocOnly = false;
-
-	if(argv[1][0] == '-'){
-		++fileArg;
-		preprocOnly = true;
-		if(argv[1][1] != 'p' || argv[1][2] != '\0') throw 255; //unrecognized flag
+	if(argc < 2){
+		std::cerr << error::invalid_usage().what() << std::endl;
+		return 1;
 	}
 
-	std::fstream readFile;
-	readFile.open(argv[fileArg]);
-
-	if(readFile.bad()) throw 255;
+	std::string command = argv[1];
 
 	std::string code;
+	if(command == "run" || command == "pp"){
+		if(argc < 3){
+			std::cerr << error::missing_filename().what() << std::endl;
+			return 1;
+		}
 
-	bool isOpen;
-	while((isOpen = readFile.is_open()) && !readFile.eof()){
-		std::string temp;
-		readFile >> temp;
-		code += temp;
+		try{
+			std::fstream readFile;
+			readFile.open(argv[2]);
+			
+			if(readFile.bad()) throw 1;
+			
+			bool isOpen;
+			while((isOpen = readFile.is_open()) && !readFile.eof()){
+				std::string temp;
+				readFile >> temp;
+				code += temp;
+			}
+			
+			if(!isOpen) throw 2;
+			
+			readFile.close();
+		}
+		catch(...){
+			std::cerr << error::file_error(argv[2]).what() << std::endl;
+			return 2;
+		}
+	}
+	else if(command == "help"){
+		std::cout << error::help_string << std::endl;
+		return 0;
 	}
 
-	if(!isOpen) throw 255;
 
-	readFile.close();
+	try{
+		if(command == "pp"){
+			std::cout << LetterCell::preprocess(code);
+		}
+		else if(command == "run"){
+			LetterCell lc(code);
 
-
-	if(preprocOnly){
-		std::cout << LetterCell::preprocess(code);
+			lc.run();
+		}
 	}
-	else{
-		LetterCell lc(code);
-
-		lc.run();
+	catch(error::error &e){
+		std::cerr << e.what() << std::endl;
+		return 3;
 	}
+	catch(...){
+		std::cerr << "Unknown error" << std::endl;
+		return 4;
+	}
+
 }

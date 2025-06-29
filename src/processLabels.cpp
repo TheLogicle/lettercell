@@ -3,6 +3,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "error.hpp"
+
 std::unordered_map<std::string, size_t> LetterCell::processLabels(std::string* code){
 
 	std::unordered_map<std::string, size_t> labels;
@@ -14,12 +16,17 @@ std::unordered_map<std::string, size_t> LetterCell::processLabels(std::string* c
 			size_t startPos = i;
 
 			size_t size = 0;
-			while(true){
-				if(c == 'k'){
-					++size;
-					++i;
+			try{
+				while(true){
+					if(c == 'k'){
+						++size;
+						++i;
+					}
+					else break;
 				}
-				else break;
+			}
+			catch(...){
+				throw error::bad_syntax_k();
 			}
 
 			std::string lblName = code->substr(i, size);
@@ -33,7 +40,34 @@ std::unordered_map<std::string, size_t> LetterCell::processLabels(std::string* c
 			*code = code->substr(0, startPos) + code->substr(i+1);
 			i = startPos - 1;
 		}
+		else if(c == 'g'){ //this is to allow to goto labels with k in the name
+			size_t startPos = i;
+
+			size_t size = 0;
+			try{
+				while(true){
+					if(c == 'g'){
+						++size;
+						++i;
+					}
+					else break;
+				}
+			}
+			catch(...){
+				throw error::bad_syntax_g();
+			}
+
+			i += size - 1;
+		}
 	}
+
+	//this will print out all labels that have been scanned
+	/*
+	printf("label count: %ld\n", labels.size());
+	for(auto i = labels.begin(); i != labels.end(); ++i){
+		printf("%s: %s\n", i->first.c_str(), std::to_string(i->second).c_str());
+	}
+	*/
 
 	return labels;
 }

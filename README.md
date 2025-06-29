@@ -1,7 +1,5 @@
 # LetterCell
 
-⚠️ **Error checks have not been implemented yet, so errors in LetterCell code could cause a SIGABRT in the interpreter**
-
 ## Description
 
 LetterCell is an esoteric programming language. It is based upon the concept of a readhead which can freely traverse over an infinitely long line of memory cell slots.
@@ -40,5 +38,8 @@ Here is a visualization:
 |    `b`    | Decrement current memory cell |
 |    `zt`   | Increment current memory cell by 16 |
 |    `zb`   | Decrement current memory cell by 16 |
-|`k`, `kk`, `kkk`, ...| Create a label with the same amount of characters as `k`'s (Example: `kx` is a label named `x`, and `kkkfoo` is a label named `foo`)
+|`k`, `kk`, `kkk`, ...| Create label with the same amount of characters as `k`'s (Example: `kx` is a label named `x`, and `kkkfoo` is a label named `foo`)
 |`g`, `gg`, `ggg`, ...| Go to label (same syntax as `k` declaration). This will only go to the label if **ONE** of the following conditions are met:<br>1. The readhead is NOT currently holding a cell<br>2. The readhead IS currently holding a cell, and it is NOT set to `0`|
+
+The interpreter only reads the operator characters listed above, and all other characters are ignored.  
+However, comments may be written in non-nestable (parentheses), and such comments can contain operator characters which will be ignored.

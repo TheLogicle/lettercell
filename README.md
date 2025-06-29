@@ -1,5 +1,12 @@
 # LetterCell
 
+## Installation
+For Arch Linux:  
+```yay -S lettercell```  
+
+For other Linux distributions (requires `make` and `g++`):  
+```git clone https://github.com/LogicleQ/lettercell && cd lettercell && make && sudo cp lettercell /usr/bin/```
+
 ## Description
 
 LetterCell is an esoteric programming language. It is based upon the concept of a readhead which can freely traverse over an infinitely long line of memory cell slots.

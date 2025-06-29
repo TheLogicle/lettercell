@@ -1,12 +1,15 @@
 #include "lettercell.hpp"
 
-void LetterCell::run(){
-	if(activated) throw 255; //cannot call run() on a LetterCell object more than once
+void LetterCell::run ()
+{
+	if (activated) throw 255; //cannot call run() on a LetterCell object more than once
 
 	activated = true;
 
-	for(ind = 0; ind < code.size(); ++ind){
-		switch(code.at(ind)){
+	for (ind = 0; ind < code.size(); ++ind)
+	{
+		switch (code.at(ind))
+		{
 			case 'l': op_l(); break;
 			case 'r': op_r(); break;
 			case 'z': op_z(); break;

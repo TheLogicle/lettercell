@@ -3,7 +3,8 @@
 
 #include <string>
 
-namespace error{
+namespace error
+{
 
 	const std::string usage_string_run = "Usage: lettercell run <file>";
 	const std::string usage_string_pp = "Usage: lettercell pp <file>";
@@ -48,48 +49,86 @@ namespace error{
 		+ "\nHowever, comments may be written in non-nestable (parentheses), and such comments can contain operator characters which will be ignored.\n\n"
 		+ "Do 'lettercell help | less' if this help page gets cut off by terminal scrolling.";
 
-	struct error{
-		virtual std::string what(){return "Unknown error";}
+
+
+	struct error
+	{
+		virtual std::string what ()
+		{
+			return "Unknown error";
+		}
 	};
 
-	struct bad_syntax_k: error{
-		std::string what() override{
+
+
+
+	struct bad_syntax_k: error
+	{
+		std::string what () override
+		{
 			return "Bad syntax: Label definition does not have enough characters";
 		};
 	};
-	struct bad_syntax_g: error{
-		std::string what() override{
+
+	struct bad_syntax_g: error
+	{
+		std::string what () override
+		{
 			return "Bad syntax: Goto call does not have enough characters";
 		}
 	};
-	struct bad_syntax_z: error{
-		std::string what() override{
+
+	struct bad_syntax_z: error
+	{
+		std::string what () override
+		{
 			return "Bad syntax: Invalid letter after z operation. Valid letters are l, r, t, b";
 		}
 	};
 
-	struct invalid_usage: error{
-		std::string what() override{
+
+
+
+	struct invalid_usage: error
+	{
+		std::string what () override
+		{
 			return "Welcome to LetterCell!\n\n" + usage_string;
 		}
 	};
-	struct missing_filename: error{
-		std::string what() override{
+
+	struct missing_filename: error
+	{
+		std::string what () override
+		{
 			return "Error: Missing filename\n" + usage_string_run;
 		}
 	};
-	struct unknown_command: error{
+
+	struct unknown_command: error
+	{
 		std::string command;
-		unknown_command(std::string command){this->command = command;}
-		std::string what() override{
+		unknown_command	(std::string command)
+		{
+			this->command = command;
+		}
+		std::string what () override
+		{
 			return "Error: Unknown command: '" + command + "'\n\n" + usage_string;
 		}
 	};
 
-	struct file_error: error{
+
+
+	struct file_error: error
+	{
 		std::string filename;
-		file_error(std::string filename){this->filename = filename;}
-		std::string what() override{
+		file_error (std::string filename)
+		{
+			this->filename = filename;
+		}
+		std::string what () override
+		{
 			return "Error: Could not read file '" + filename + "'";
 		}
 	};

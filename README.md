@@ -48,5 +48,5 @@ Here is a visualization:
 |`k`, `kk`, `kkk`, ...| Create label with the same amount of characters as `k`'s (Example: `kx` is a label named `x`, and `kkkfoo` is a label named `foo`)
 |`g`, `gg`, `ggg`, ...| Go to label (same syntax as `k` declaration). This will only go to the label if **ONE** of the following conditions are met:<br>1. The readhead is NOT currently holding a cell<br>2. The readhead IS currently holding a cell, and it is NOT set to `0`|
 
-The interpreter only reads the operator characters listed above, and all other characters are ignored.  
-However, comments may be written in non-nestable (parentheses), and such comments can contain operator characters which will be ignored.
+Only **lowercase** letters are recognized, and all other characters are ignored.  
+However, comments may be written in non-nestable (parentheses), and everything inside comments will be fully ignored.

@@ -13,12 +13,7 @@ std::string LetterCell::preprocess (std::string orig)
 		
 		if (c == '(') comment = true;
 		else if (c == ')') comment = false;
-		if (!comment && (
-		                 c == 'l' || c == 'r' || c == 'z'
-		              || c == 's' || c == 'v' || c == 'p'
-		              || c == 'd' || c == 't' || c == 'b'
-		              || c == 'g' || c == 'k'
-		           )) res += c;
+		if (!comment && c >= 'a' && c <= 'z') res += c;
 	}
 
 	return res;

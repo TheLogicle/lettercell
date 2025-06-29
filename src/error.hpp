@@ -45,8 +45,8 @@ namespace error
 		+ " g, gg, ggg, ... - Go to label (same syntax as k declaration). This will only go to the label if ONE of the following conditions are met:\n"
 		+ "        1. The readhead is NOT currently holding a cell\n"
 		+ "        2. The readhead IS currently holding a cell, and it is NOT set to 0\n\n"
-		+ "The interpreter only reads the operator characters listed above, and all other characters are ignored."
-		+ "\nHowever, comments may be written in non-nestable (parentheses), and such comments can contain operator characters which will be ignored.\n\n"
+		+ "Only lowercase letters are recognized, and all other characters are ignored.\n"
+		+ "However, comments may be written in non-nestable (parentheses), and everything inside comments will be fully ignored.\n\n"
 		+ "Do 'lettercell help | less' if this help page gets cut off by terminal scrolling.";
 
 
@@ -62,7 +62,7 @@ namespace error
 
 
 
-	struct bad_syntax_k: error
+	struct bad_syntax_k : error
 	{
 		std::string what () override
 		{
@@ -70,7 +70,7 @@ namespace error
 		};
 	};
 
-	struct bad_syntax_g: error
+	struct bad_syntax_g : error
 	{
 		std::string what () override
 		{
@@ -78,7 +78,7 @@ namespace error
 		}
 	};
 
-	struct bad_syntax_z: error
+	struct bad_syntax_z : error
 	{
 		std::string what () override
 		{
@@ -86,10 +86,23 @@ namespace error
 		}
 	};
 
+	struct unknown_operation : error
+	{
+		char bad_letter;
+		unknown_operation (char& bad_letter)
+		{
+			this->bad_letter = bad_letter;
+		}
+		std::string what () override
+		{
+			return std::string{"Bad syntax: Invalid letter operation '"} + bad_letter + "'";
+		}
+	};
 
 
 
-	struct invalid_usage: error
+
+	struct invalid_usage : error
 	{
 		std::string what () override
 		{
@@ -97,7 +110,7 @@ namespace error
 		}
 	};
 
-	struct missing_filename: error
+	struct missing_filename : error
 	{
 		std::string what () override
 		{
@@ -105,10 +118,10 @@ namespace error
 		}
 	};
 
-	struct unknown_command: error
+	struct unknown_command : error
 	{
 		std::string command;
-		unknown_command	(std::string command)
+		unknown_command	(const std::string& command)
 		{
 			this->command = command;
 		}
@@ -120,10 +133,10 @@ namespace error
 
 
 
-	struct file_error: error
+	struct file_error : error
 	{
 		std::string filename;
-		file_error (std::string filename)
+		file_error (const std::string& filename)
 		{
 			this->filename = filename;
 		}

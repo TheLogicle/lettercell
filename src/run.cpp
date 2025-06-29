@@ -1,3 +1,4 @@
+#include "error.hpp"
 #include "lettercell.hpp"
 
 void LetterCell::run ()
@@ -20,7 +21,7 @@ void LetterCell::run ()
 			case 't': op_t(); break;
 			case 'b': op_b(); break;
 			case 'g': op_g(); break;
-			default: throw 255;
+			default: throw error::unknown_operation(code.at(ind));
 		}
 	}
 }
